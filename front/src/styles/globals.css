@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+	box-sizing: border-box;
+}
+
+:root {
+	--color-primary: #9d8838;
+	--color-secondary: #373737;
+	--color-tertiary: #817546;
+	--color-accent: #fcd32a;
+	--color-error: #d40302;
+	--color-buy: #22c55e;
+}
+
+body {
+	@apply grid min-h-screen min-w-[100vw] grid-rows-[auto,1fr,auto] bg-gradient-to-b from-yellow-100 to-white text-gray-800;
+}
+
+.container {
+	@apply mx-auto my-8 w-full max-w-[90%] px-4 sm:px-6 lg:max-w-7xl lg:px-8;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-secondary);
+	color: var(--color-secondary);
+	font-weight: 700;
+	letter-spacing: -1px;
+	line-height: 1.1;
+}
+
+h1 {
+	font-size: 4rem;
+	letter-spacing: -2px;
+}
+h2 {
+	font-size: 3rem;
+}
+h3 {
+	font-size: 2rem;
+}
+h4 {
+	font-size: 1.5rem;
+}
+h5 {
+	font-size: 1rem;
+}
+h6 {
+	font-size: 0.8rem;
+}
