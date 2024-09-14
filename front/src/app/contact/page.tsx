@@ -1,9 +1,5 @@
 'use client'
-<<<<<<< HEAD
-import Button from '@/components/Button/Button'
-=======
 import Button from '@/components/ui/Button/Button'
->>>>>>> HW-LIBRERIA-SWEETALERT
 import React, { useState } from 'react'
 import Swal from 'sweetalert2'
 
