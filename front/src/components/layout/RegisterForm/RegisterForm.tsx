@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import InputPersonalized from '@/components/ui/InputPersonalized/InputPersonalized'
 import Button from '@/components/ui/Button/Button'
 import Link from 'next/link'
+import { FaPencilAlt } from 'react-icons/fa'
 import Swal from 'sweetalert2'
 
 import {
@@ -224,6 +225,7 @@ const RegisterForm = () => {
 							Go to Login
 						</Link>
 						<Button
+							icon={<FaPencilAlt />}
 							variant='secondary'
 							size='base'
 							type='submit'

@@ -3,10 +3,26 @@ import React from 'react'
 interface IButton {
 	children: React.ReactNode
 	className?: string
-	variant?: 'primary' | 'secondary' | 'tertiary' | 'accent' | 'error' | 'success' | 'warning' | 'danger' | 'info' | 'light' | 'dark' | 'link' | 'outline' | null
+	variant?:
+		| 'primary'
+		| 'secondary'
+		| 'tertiary'
+		| 'accent'
+		| 'error'
+		| 'success'
+		| 'warning'
+		| 'danger'
+		| 'info'
+		| 'light'
+		| 'dark'
+		| 'link'
+		| 'outline'
+		| null
 	size?: 'xs' | 'sm' | 'base' | 'lg' | 'xl'
 	type?: 'button' | 'submit' | 'reset'
 	onClick?: () => void
+	icon?: React.ReactElement
+	iconPosition?: 'left' | 'right'
 }
 
 const Button: React.FC<IButton> = ({
@@ -16,6 +32,8 @@ const Button: React.FC<IButton> = ({
 	size = 'base',
 	onClick,
 	type = 'button',
+	icon,
+	iconPosition = 'left',
 }) => {
 	const sizeClasses = {
 		xs: 'text-xs px-2 py-1',
@@ -41,6 +59,16 @@ const Button: React.FC<IButton> = ({
 		error: 'bg-red-500 text-white hover:bg-red-600',
 	}
 
+	const iconSizeClasses = {
+		xs: 'w-3 h-3',
+		sm: 'w-4 h-4',
+		base: 'w-5 h-5',
+		lg: 'w-6 h-6',
+		xl: 'w-7 h-7',
+	}
+
+	const iconClass = icon ? `inline-flex items-center justify-center gap-2` : ''
+
 	return (
 		<button
 			className={`
@@ -48,12 +76,23 @@ const Button: React.FC<IButton> = ({
         hover:scale-105 active:scale-95
         ${sizeClasses[size]}
         ${variant ? variantClasses[variant] : ''}
+        ${iconClass}
         ${className}
       `}
 			onClick={onClick}
 			type={type}
 		>
+			{icon &&
+				iconPosition === 'left' &&
+				React.cloneElement(icon, {
+					className: `${iconSizeClasses[size]} ${icon.props.className || ''}`,
+				})}
 			{children}
+			{icon &&
+				iconPosition === 'right' &&
+				React.cloneElement(icon, {
+					className: `${iconSizeClasses[size]} ${icon.props.className || ''}`,
+				})}
 		</button>
 	)
 }

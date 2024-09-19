@@ -1,8 +1,10 @@
 'use client'
 import Button from '@/components/ui/Button/Button'
+import LinkPersonalized from '@/components/ui/LinkPersonalized/LinkPersonalized'
 import { AuthContext } from '@/contexts/authContext'
 import { IProduct } from '@/interfaces/product.interface'
 import { useContext, useState, useEffect } from 'react'
+import { FaTrashAlt, FaTimes, FaCheckCircle } from 'react-icons/fa'
 import Swal from 'sweetalert2'
 
 const CartPage = () => {
@@ -134,18 +136,29 @@ const CartPage = () => {
 
 	return (
 		<main className='container'>
-			<h3 className='bg-gradient-to-r from-green-400 to-yellow-400 py-5 px-5 text-gray-900 font-bold text-2xl shadow-md rounded-md'>
-				Cart
-			</h3>
+			<div className='flex justify-between items-center bg-gradient-to-r from-green-400 to-yellow-400 py-5 px-5  shadow-md rounded-md mb-6'>
+				<h3 className='text-gray-900 font-bold text-2xl'>Cart</h3>
+				<LinkPersonalized
+					href='/products'
+					className='bg-secondary text-center font-bold text-white transition hover:bg-blue-700 sm:text-xl md:text-base lg:text-lg'
+					size='sm'
+				>
+					Products
+				</LinkPersonalized>
+			</div>
 			<div className='flex justify-between items-center mt-5'>
 				<h4>Total Products: {cart.length}</h4>
 				<h4> Total US: ${calculateTotal().toFixed(2)}</h4>
 				{cart.length > 0 && (
 					<div className='flex gap-3 mt-4 md:mt-0'>
-						<Button variant='success' onClick={handleOrder}>
+						<Button
+							icon={<FaCheckCircle />}
+							variant='success'
+							onClick={handleOrder}
+						>
 							Finish Order
 						</Button>
-						<Button variant='secondary' onClick={clearCart}>
+						<Button icon={<FaTimes />} variant='secondary' onClick={clearCart}>
 							Clear Cart
 						</Button>
 					</div>
@@ -157,6 +170,7 @@ const CartPage = () => {
 					<div key={product.id} className='flex justify-between items-center'>
 						<p>{`${i + 1} - ${product.name} - (US ${product.price})`}</p>
 						<Button
+							icon={<FaTrashAlt />}
 							size='sm'
 							variant='error'
 							onClick={() => removeProductFromCart(String(product.id))}

@@ -8,6 +8,7 @@ import { loginService } from '@/services/authServices'
 import { useRouter } from 'next/navigation'
 import { AuthContext } from '@/contexts/authContext'
 import Swal from 'sweetalert2'
+import { FaSignInAlt } from 'react-icons/fa'
 
 type FormData = {
 	email: string
@@ -146,6 +147,7 @@ const LoginForm = () => {
 							Sign Up
 						</Link>
 						<Button
+							icon={<FaSignInAlt />}
 							variant='secondary'
 							size='base'
 							type='submit'

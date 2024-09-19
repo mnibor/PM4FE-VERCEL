@@ -3,6 +3,8 @@
 import { AuthContext } from '@/contexts/authContext'
 import { useContext, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { FaList, FaEnvelope, FaHome, FaPhone } from 'react-icons/fa'
+import LinkPersonalized from '@/components/ui/LinkPersonalized/LinkPersonalized'
 
 const DashboardPage = () => {
 	const router = useRouter()
@@ -38,9 +40,16 @@ const DashboardPage = () => {
 
 	return (
 		<div className='container mx-auto'>
-			<h3 className='bg-gradient-to-r from-green-400 to-yellow-400 py-5 px-5 text-gray-900 font-bold text-2xl shadow-md rounded-md mb-6'>
-				My Dashboard
-			</h3>
+			<div className='flex justify-between items-center bg-gradient-to-r from-green-400 to-yellow-400 py-5 px-5  shadow-md rounded-md mb-6'>
+				<h3 className='text-gray-900 font-bold text-2xl'>My Dashboard</h3>
+				<LinkPersonalized
+					href='/products'
+					className='bg-secondary text-center font-bold text-white transition hover:bg-blue-700 sm:text-xl md:text-base lg:text-lg'
+					size='sm'
+				>
+					Products
+				</LinkPersonalized>
+			</div>
 			<div className='flex flex-col md:flex-row gap-6'>
 				<div className='w-full md:w-1/4  bg-yellow-400 shadow-md rounded-lg overflow-hidden'>
 					<div className='bg-secondary px-4 py-2'>
@@ -50,9 +59,24 @@ const DashboardPage = () => {
 					</div>
 					<div className='p-4'>
 						<p className='font-bold text-xl'>{user.user.name}</p>
-						<p>{user.user.email}</p>
-						<p>{user.user.address}</p>
-						<p>{user.user.phone}</p>
+						<p className='flex items-center'>
+							<span className='mr-2'>
+								<FaEnvelope />
+							</span>{' '}
+							{user.user.email}
+						</p>
+						<p className='flex items-center'>
+							<span className='mr-2'>
+								<FaHome />
+							</span>{' '}
+							{user.user.address}
+						</p>
+						<p className='flex items-center'>
+							<span className='mr-2'>
+								<FaPhone />
+							</span>{' '}
+							{user.user.phone}
+						</p>
 					</div>
 				</div>
 				<div className='w-full md:w-3/4 bg-yellow-400 shadow-md rounded-lg overflow-hidden'>
@@ -66,7 +90,12 @@ const DashboardPage = () => {
 									key={order.id}
 									className='flex justify-between items-center border-b pb-2'
 								>
-									<span>Order N° {order.id}</span>
+									<span className='flex items-center'>
+										<span>
+											<FaList className='mr-2' />
+										</span>
+										Order N° {order.id}
+									</span>
 									<span>{formatDate(order.date)}</span>
 								</li>
 							)) ?? <li>No orders found</li>}
