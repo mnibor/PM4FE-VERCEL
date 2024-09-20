@@ -1,11 +1,10 @@
 import { LogoLong } from '@/components/layout/LogoLong/LogoLong'
+import PageHeader from '@/components/layout/PageHeader/PageHeader'
 
 const AboutPage = () => {
 	return (
 		<main className='container'>
-			<h3 className='bg-gradient-to-r from-green-400 to-yellow-400 py-5 px-5 text-gray-900 font-bold text-2xl shadow-md rounded-md'>
-				About Us
-			</h3>
+			<PageHeader title='About Us' />
 			<div className='my-6'>
 				<LogoLong />
 

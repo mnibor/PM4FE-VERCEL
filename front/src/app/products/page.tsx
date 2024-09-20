@@ -1,3 +1,4 @@
+import PageHeader from '@/components/layout/PageHeader/PageHeader'
 import ProductCard from '@/components/layout/ProductCard/ProductCard'
 import ProductGrid from '@/components/layout/ProductGrid/ProductGrid'
 import { IProduct } from '@/interfaces/product.interface'
@@ -10,10 +11,7 @@ const ProductsPage = async () => {
 	return (
 		<div>
 			<div className='container'>
-				<h3 className='bg-gradient-to-r from-green-400 to-yellow-400 py-5 px-5 text-gray-900 font-bold text-2xl shadow-md rounded-md'>
-					Products
-				</h3>
-
+				<PageHeader title='Products' />
 				<div className='my-5'>
 					<ProductGrid>
 						{products.map((product: IProduct, i: number) => (

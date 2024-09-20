@@ -1,4 +1,5 @@
 import ProductNotFound from '@/components/ProductNotFound/ProductNotFound'
+import PageHeader from '@/components/layout/PageHeader/PageHeader'
 import ProductDetail from '@/components/layout/ProductDetail/ProductDetail'
 import { IProduct } from '@/interfaces/product.interface'
 
@@ -15,10 +16,8 @@ const ProductDetailPage = async ({ params }: { params: { id: string } }) => {
 	}
 
 	return (
-		<div className='container mx-auto my-5'>
-			<h3 className='bg-gradient-to-r from-green-400 to-yellow-400 py-5 px-5 text-gray-900 font-bold text-2xl shadow-md rounded-md'>
-				Product Detail
-			</h3>
+		<div className='container'>
+			<PageHeader title='Product Detail' />
 			<div className='my-5'>
 				<ProductDetail product={product} />
 			</div>

@@ -1,10 +1,17 @@
 'use client'
-
 import { AuthContext } from '@/contexts/authContext'
 import { useContext, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { FaList, FaEnvelope, FaHome, FaPhone } from 'react-icons/fa'
-import LinkPersonalized from '@/components/ui/LinkPersonalized/LinkPersonalized'
+import {
+	FaList,
+	FaEnvelope,
+	FaHome,
+	FaPhone,
+	FaArrowLeft,
+	FaUser,
+	FaCalendarAlt,
+} from 'react-icons/fa'
+import PageHeader from '@/components/layout/PageHeader/PageHeader'
 
 const DashboardPage = () => {
 	const router = useRouter()
@@ -39,67 +46,67 @@ const DashboardPage = () => {
 	}
 
 	return (
-		<div className='container mx-auto'>
-			<div className='flex justify-between items-center bg-gradient-to-r from-green-400 to-yellow-400 py-5 px-5  shadow-md rounded-md mb-6'>
-				<h3 className='text-gray-900 font-bold text-2xl'>My Dashboard</h3>
-				<LinkPersonalized
-					href='/products'
-					className='bg-secondary text-center font-bold text-white transition hover:bg-blue-700 sm:text-xl md:text-base lg:text-lg'
-					size='sm'
-				>
-					Products
-				</LinkPersonalized>
-			</div>
-			<div className='flex flex-col md:flex-row gap-6'>
-				<div className='w-full md:w-1/4  bg-yellow-400 shadow-md rounded-lg overflow-hidden'>
-					<div className='bg-secondary px-4 py-2'>
-						<h4 className='font-semibold text-gray-200 text-lg'>
+		<div className='container'>
+			<PageHeader
+				title='My Dashboard'
+				buttonText='Products'
+				buttonLink='/products'
+				buttonIcon={FaArrowLeft}
+			/>
+
+			<div className='grid gap-8 md:grid-cols-3'>
+				<div className='col-span-full md:col-span-1 rounded-lg bg-white shadow-lg overflow-hidden'>
+					<div className='bg-secondary px-4 py-3'>
+						<h2 className='text-xl font-semibold text-white'>
 							Client Information
-						</h4>
+						</h2>
 					</div>
-					<div className='p-4'>
-						<p className='font-bold text-xl'>{user.user.name}</p>
-						<p className='flex items-center'>
-							<span className='mr-2'>
-								<FaEnvelope />
-							</span>{' '}
-							{user.user.email}
-						</p>
-						<p className='flex items-center'>
-							<span className='mr-2'>
-								<FaHome />
-							</span>{' '}
-							{user.user.address}
-						</p>
-						<p className='flex items-center'>
-							<span className='mr-2'>
-								<FaPhone />
-							</span>{' '}
-							{user.user.phone}
-						</p>
+					<div className='p-6 space-y-4'>
+						<div className='flex items-center gap-3'>
+							<FaUser className='text-2xl text-secondary' />
+							<p className='text-xl font-bold'>{user.user.name}</p>
+						</div>
+						<div className='flex items-center gap-3'>
+							<FaEnvelope className='text-xl text-secondary' />
+							<p>{user.user.email}</p>
+						</div>
+						<div className='flex items-center gap-3'>
+							<FaHome className='text-xl text-secondary' />
+							<p>{user.user.address}</p>
+						</div>
+						<div className='flex items-center gap-3'>
+							<FaPhone className='text-xl text-secondary' />
+							<p>{user.user.phone}</p>
+						</div>
 					</div>
 				</div>
-				<div className='w-full md:w-3/4 bg-yellow-400 shadow-md rounded-lg overflow-hidden'>
-					<div className='bg-secondary px-4 py-2'>
-						<h4 className='font-semibold text-gray-200 text-lg'>My Orders</h4>
+
+				<div className='col-span-full md:col-span-2 rounded-lg bg-white shadow-lg overflow-hidden'>
+					<div className='bg-secondary px-4 py-3'>
+						<h2 className='text-xl font-semibold text-white'>My Orders</h2>
 					</div>
-					<div className='p-4'>
-						<ul className='space-y-2'>
-							{user.user.orders?.map((order) => (
-								<li
-									key={order.id}
-									className='flex justify-between items-center border-b pb-2'
-								>
-									<span className='flex items-center'>
-										<span>
-											<FaList className='mr-2' />
-										</span>
-										Order N° {order.id}
-									</span>
-									<span>{formatDate(order.date)}</span>
-								</li>
-							)) ?? <li>No orders found</li>}
-						</ul>
+					<div className='p-6'>
+						{user.user.orders && user.user.orders.length > 0 ? (
+							<ul className='divide-y divide-gray-200'>
+								{user.user.orders.map((order) => (
+									<li
+										key={order.id}
+										className='py-4 flex items-center justify-between'
+									>
+										<div className='flex items-center gap-3'>
+											<FaList className='text-xl text-secondary' />
+											<span className='font-medium'>Order N° {order.id}</span>
+										</div>
+										<div className='flex items-center gap-2'>
+											<FaCalendarAlt className='text-secondary' />
+											<span>{formatDate(order.date)}</span>
+										</div>
+									</li>
+								))}
+							</ul>
+						) : (
+							<p className='text-center text-gray-500'>No orders found</p>
+						)}
 					</div>
 				</div>
 			</div>

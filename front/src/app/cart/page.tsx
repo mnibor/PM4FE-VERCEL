@@ -1,18 +1,16 @@
 'use client'
-import Button from '@/components/ui/Button/Button'
-import LinkPersonalized from '@/components/ui/LinkPersonalized/LinkPersonalized'
+import { useContext, useState, useEffect } from 'react'
 import { AuthContext } from '@/contexts/authContext'
 import { IProduct } from '@/interfaces/product.interface'
-import { useContext, useState, useEffect } from 'react'
-import { FaTrashAlt, FaTimes, FaCheckCircle } from 'react-icons/fa'
+import { FaTrashAlt, FaTimes, FaCheckCircle, FaArrowLeft } from 'react-icons/fa'
 import Swal from 'sweetalert2'
+import PageHeader from '@/components/layout/PageHeader/PageHeader'
 
 const CartPage = () => {
 	const { user } = useContext(AuthContext)
 	const [cart, setCart] = useState<IProduct[]>([])
 
 	useEffect(() => {
-		// Chequeo si el window esta definido
 		if (typeof window !== 'undefined') {
 			const storedCart = localStorage.getItem('cart')
 			setCart(storedCart ? JSON.parse(storedCart) : [])
@@ -71,7 +69,6 @@ const CartPage = () => {
 	}
 
 	const handleOrder = async () => {
-		// Diálogo de confirmación
 		const result = await Swal.fire({
 			title: 'Confirm Order',
 			text: 'Are you sure you want to place this order?',
@@ -104,7 +101,6 @@ const CartPage = () => {
 					return res.json()
 				})
 				.then((newOrder) => {
-					// Limpiamos el carrito
 					localStorage.setItem('cart', JSON.stringify([]))
 					setCart([])
 
@@ -114,7 +110,6 @@ const CartPage = () => {
 						date: newOrder.date,
 					}
 
-					// Actualiza el objeto user en el localStorage
 					const currentUser = JSON.parse(localStorage.getItem('user') || '{}')
 
 					if (currentUser.user && currentUser.user.orders) {
@@ -136,47 +131,54 @@ const CartPage = () => {
 
 	return (
 		<main className='container'>
-			<div className='flex justify-between items-center bg-gradient-to-r from-green-400 to-yellow-400 py-5 px-5  shadow-md rounded-md mb-6'>
-				<h3 className='text-gray-900 font-bold text-2xl'>Cart</h3>
-				<LinkPersonalized
-					href='/products'
-					className='bg-secondary text-center font-bold text-white transition hover:bg-blue-700 sm:text-xl md:text-base lg:text-lg'
-					size='sm'
-				>
-					Products
-				</LinkPersonalized>
-			</div>
-			<div className='flex justify-between items-center mt-5'>
-				<h4>Total Products: {cart.length}</h4>
-				<h4> Total US: ${calculateTotal().toFixed(2)}</h4>
+			<PageHeader
+				title='My Cart'
+				buttonText='Products'
+				buttonLink='/products'
+				buttonIcon={FaArrowLeft}
+			/>
+
+			<div className='mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
+				<h2 className='text-xl font-semibold'>Total Products: {cart.length}</h2>
+				<h2 className='text-xl font-semibold'>
+					Total: ${calculateTotal().toFixed(2)}
+				</h2>
 				{cart.length > 0 && (
-					<div className='flex gap-3 mt-4 md:mt-0'>
-						<Button
-							icon={<FaCheckCircle />}
-							variant='success'
+					<div className='flex flex-col gap-2 sm:flex-row'>
+						<button
 							onClick={handleOrder}
+							className='flex items-center justify-center gap-2 rounded-md bg-green-500 px-4 py-2 text-lg font-bold text-white transition hover:bg-green-600 hover:scale-105 active:scale-95'
 						>
+							<FaCheckCircle className='h-5 w-5' />
 							Finish Order
-						</Button>
-						<Button icon={<FaTimes />} variant='secondary' onClick={clearCart}>
+						</button>
+						<button
+							onClick={clearCart}
+							className='flex items-center justify-center gap-2 rounded-md bg-gray-500 px-4 py-2 text-lg font-bold text-white transition hover:bg-gray-600 hover:scale-105 active:scale-95'
+						>
+							<FaTimes className='h-5 w-5' />
 							Clear Cart
-						</Button>
+						</button>
 					</div>
 				)}
 			</div>
 
-			<div className='mt-8 flex flex-col gap-3 text-xl'>
+			<div className='space-y-4'>
 				{cart.map((product: IProduct, i: number) => (
-					<div key={product.id} className='flex justify-between items-center'>
-						<p>{`${i + 1} - ${product.name} - (US ${product.price})`}</p>
-						<Button
-							icon={<FaTrashAlt />}
-							size='sm'
-							variant='error'
+					<div
+						key={product.id}
+						className='flex flex-col items-start justify-between gap-2 rounded-lg bg-white p-4 shadow-md sm:flex-row sm:items-center'
+					>
+						<p className='text-lg'>{`${i + 1} - ${product.name} - (US $${
+							product.price
+						})`}</p>
+						<button
 							onClick={() => removeProductFromCart(String(product.id))}
+							className='flex items-center justify-center gap-2 rounded-md bg-red-500 px-4 py-2 text-base font-bold text-white transition hover:bg-red-600 hover:scale-105 active:scale-95'
 						>
+							<FaTrashAlt className='h-4 w-4' />
 							Remove
-						</Button>
+						</button>
 					</div>
 				))}
 			</div>

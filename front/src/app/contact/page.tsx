@@ -1,4 +1,5 @@
 'use client'
+import PageHeader from '@/components/layout/PageHeader/PageHeader'
 import Button from '@/components/ui/Button/Button'
 import React, { useState } from 'react'
 import Swal from 'sweetalert2'
@@ -28,10 +29,7 @@ const ContactPage = () => {
 
 	return (
 		<div className='container'>
-			<h3 className='bg-gradient-to-r from-green-400 to-yellow-400 py-5 px-5 text-gray-900 font-bold text-2xl shadow-md rounded-md'>
-				Contact Us
-			</h3>
-
+			<PageHeader title='Contact Us' />
 			<div className='py-4'>
 				<div className='w-full md:w-3/4 bg-yellow-400 mx-auto shadow-md rounded-lg overflow-hidden'>
 					<div className='bg-secondary px-4 py-2'>
