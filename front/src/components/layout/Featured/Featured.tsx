@@ -1,6 +1,7 @@
 import { IProduct } from '@/interfaces/product.interface'
 import ProductCard from '@/components/layout/ProductCard/ProductCard'
 import ProductGrid from '@/components/layout/ProductGrid/ProductGrid'
+import PageHeader from '@/components/layout/PageHeader/PageHeader'
 
 const Featured = async () => {
 	const url = process.env.API_URL + '/products'
@@ -19,9 +20,7 @@ const Featured = async () => {
 
 	return (
 		<div className='container my-5'>
-			<h3 className='bg-gradient-to-r from-green-400 to-yellow-400 py-5 px-5 text-gray-900 font-bold text-2xl shadow-md rounded-md'>
-				Featured Products
-			</h3>
+			<PageHeader title='Featured Products' />
 			<ProductGrid>
 				{randomProducts.map((product: IProduct) => (
 					<ProductCard key={product.id} product={product} />
