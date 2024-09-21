@@ -1,11 +1,10 @@
 'use client'
-
 import Image from 'next/image'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { AuthContext } from '@/contexts/authContext'
 import { getCategoryName } from '@/utils/categories'
-import { FaShoppingCart, FaArrowLeft } from 'react-icons/fa'
+import { FaShoppingBag, FaCartArrowDown, FaArrowLeft } from 'react-icons/fa'
 import Swal from 'sweetalert2'
 
 interface Product {
@@ -26,16 +25,18 @@ export default function ProductDetail({ product }: ProductDetailProps) {
 	const { user } = useContext(AuthContext)
 	const router = useRouter()
 	const categoryName = getCategoryName(product.categoryId)
+	const cart = JSON.parse(localStorage.getItem('cart') || '[]')
+	const [cartItems, setCartItems] = useState(cart.length)
 
 	const handleBuy = () => {
 		if (!user?.login) {
 			router.push('/login')
 		} else {
-			const cart = JSON.parse(localStorage.getItem('cart') || '[]')
 			if (!cart.some((item: Product) => item.id === product?.id)) {
 				cart.push(product)
 				localStorage.setItem('cart', JSON.stringify(cart))
 				window.dispatchEvent(new Event('storage'))
+				setCartItems(cart.length)
 				Swal.fire({
 					title: 'Success!',
 					text: `The product ${product?.name} has been added to your cart`,
@@ -102,12 +103,22 @@ export default function ProductDetail({ product }: ProductDetailProps) {
 								<FaArrowLeft className='h-5 w-5 sm:h-4 sm:w-4' />
 								<span>Products</span>
 							</button>
+							{cartItems > 0 && (
+								<button
+									onClick={() => router.push('/cart')}
+									className='flex w-full items-center justify-center gap-2 rounded-md bg-primary px-6 py-3 text-lg font-bold text-white transition hover:bg-blue-700 hover:scale-105 active:scale-95 sm:text-base'
+									aria-label='Go to cart'
+								>
+									<FaShoppingBag className='h-5 w-5 sm:h-4 sm:w-4' />
+									<span>Cart</span>
+								</button>
+							)}
 							<button
 								onClick={handleBuy}
 								className='flex w-full items-center justify-center gap-2 rounded-md bg-green-500 px-6 py-3 text-lg font-bold text-white transition hover:bg-green-700 hover:scale-105 active:scale-95 sm:text-base'
 								aria-label='Add to cart'
 							>
-								<FaShoppingCart className='h-5 w-5 sm:h-4 sm:w-4' />
+								<FaCartArrowDown className='h-5 w-5 sm:h-4 sm:w-4' />
 								<span>Buy</span>
 							</button>
 						</div>
