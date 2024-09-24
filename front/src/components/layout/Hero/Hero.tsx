@@ -1,4 +1,3 @@
-'use client'
 import Image from 'next/image'
 import LinkPersonalized from '@/components/ui/LinkPersonalized/LinkPersonalized'
 import { FaShoppingCart } from 'react-icons/fa'
