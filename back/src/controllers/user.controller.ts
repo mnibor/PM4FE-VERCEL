@@ -16,7 +16,7 @@ export const registerUser = catchedController(
       phone,
     });
     res.status(201).send(newUser);
-  }
+  },
 );
 
 export const login = catchedController(async (req: Request, res: Response) => {
